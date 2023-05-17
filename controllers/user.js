@@ -24,11 +24,18 @@ export const login = async (req, res, next) => {
 	}
 }
 
-export const logout = (req, res, next) => {
-	res.status(404).cookie("token", "", { maxAge: 0 }).json({
-		success: true,
-		message: "Logged Out",
-	})
+export const logout = (req, res) => {
+	res
+		.status(404)
+		.cookie("token", "", {
+			maxAge: 0,
+			sameSite: process.env.NODE_ENV === "Development" ? "lax" : "none",
+			secure: process.env.NODE_ENV === "Development" ? false : true,
+		})
+		.json({
+			success: true,
+			user: req.user,
+		})
 }
 
 export const register = async (req, res) => {
