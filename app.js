@@ -4,6 +4,7 @@ import userRouter from "./routes/user.js"
 import taskRouter from "./routes/task.js"
 import cookieParser from "cookie-parser"
 import { config } from "dotenv"
+import { errorMiddleWare } from "./middlewares/error.js"
 
 export const app = express()
 
@@ -28,3 +29,6 @@ const schema = new mongoose.Schema({
 app.get("/", (req, res) => {
 	res.send("Heyyyy")
 })
+
+//Using Error Middleware
+app.use(errorMiddleWare)
